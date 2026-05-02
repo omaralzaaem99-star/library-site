@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>مكتبة جامعة الكتاب</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Tahoma", Arial, sans-serif;
+  background: #f7efe5;
+  color: #2b1b10;
+}
+
+header {
+  height: 85vh;
+  background:
+    linear-gradient(rgba(70,35,10,0.65), rgba(70,35,10,0.65)),
+    url("https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=1600");
+  background-size: cover;
+  background-position: center;
+  color: white;
+  position: relative;
+}
+
+nav {
+  height: 80px;
+  background: rgba(255,255,255,0.92);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 45px;
+  color: #4b2a14;
+  font-weight: bold;
+}
+
+.logo {
+  font-size: 24px;
+}
+
+.nav-links span {
+  margin: 0 18px;
+}
+
+.hero {
+  padding: 120px 70px;
+  text-align: right;
+}
+
+.hero h1 {
+  font-size: 64px;
+  margin: 0;
+}
+
+.hero h1 span {
+  color: #f59e0b;
+}
+
+.hero p {
+  font-size: 24px;
+  max-width: 700px;
+  line-height: 1.8;
+}
+
+.hero button {
+  width: 180px;
+  background: #f59e0b;
+  color: white;
+  border: none;
+  padding: 15px;
+  border-radius: 8px;
+  font-size: 18px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 35px 20px;
+}
+
+.box {
+  background: white;
+  padding: 25px;
+  margin-bottom: 25px;
+  border-radius: 18px;
+  box-shadow: 0 12px 30px rgba(80,40,10,0.12);
+}
+
+input {
+  width: 100%;
+  padding: 14px;
+  margin: 8px 0;
+  border-radius: 10px;
+  border: 1px solid #d6c3ad;
+  font-size: 16px;
+}
+
+button {
+  width: 100%;
+  padding: 13px;
+  margin-top: 8px;
+  border: none;
+  border-radius: 10px;
+  background: #6b3a17;
+  color: white;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: translateY(-3px);
+  background: #9a5a22;
+}
+
+.hidden {
+  display: none;
+}
+
+.section-title {
+  font-size: 34px;
+  margin: 40px 0 25px;
+  color: #4b2a14;
+}
+
+.books-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 28px;
+}
+
+.book {
+  background: white;
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 15px 35px rgba(70,35,10,0.15);
+  transition: 0.35s;
+  animation: fadeUp 0.6s ease;
+}
+
+.book:hover {
+  transform: translateY(-10px) scale(1.02);
+}
+
+.book-cover {
+  height: 320px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #0f766e, #064e3b);
+  color: white;
+  padding: 25px;
+  position: relative;
+  overflow: hidden;
+}
+
+.book-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 14px;
+}
+
+.book-title-on-cover {
+  font-size: 26px;
+  font-weight: bold;
+  margin-top: 40px;
+}
+
+.badge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: #f59e0b;
+  color: white;
+  padding: 7px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.badge.reserved {
+  background: #dc2626;
+}
+
+.book h3 {
+  margin-bottom: 5px;
+  font-size: 22px;
+}
+
+.book p {
+  color: #6b4f3b;
+}
+
+.available {
+  color: #15803d;
+  font-weight: bold;
+}
+
+.reserved-text {
+  color: #dc2626;
+  font-weight: bold;
+}
+
+.admin-panel {
+  border: 2px solid #f59e0b;
+}
+
+.delete-btn {
+  background: #dc2626;
+}
+
+.edit-btn {
+  background: #f59e0b;
+}
+
+.return-btn {
+  background: #15803d;
+}
+
+.logout-btn {
+  max-width: 180px;
+  background: #444;
+}
+
+.stats {
+  background: #fff7ed;
+  padding: 15px;
+  border-radius: 12px;
+  line-height: 2;
+  font-weight: bold;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <nav>
+    <div class="logo">📚 مكتبة جامعة الكتاب</div>
+    <div class="nav-links">
+      <span>الفهرس</span>
+      <span>عن المكتبة</span>
+      <span>المواعيد والزيارة</span>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <h1>مكتبة <span>جامعة الكتاب</span></h1>
+    <p>
+      منصة رقمية لاستعارة الكتب وحجزها بسهولة، مع متابعة حالة الكتاب
+      ومعرفة هل هو متاح أو محجوز.
+    </p>
+    <button onclick="document.getElementById('main').scrollIntoView({behavior:'smooth'})">
+      تصفح الكتب
+    </button>
+  </div>
+</header>
+
+<main id="main" class="container">
+
+  <div id="auth" class="box">
+    <h2>تسجيل الدخول</h2>
+    <input id="loginUser" placeholder="اسم المستخدم">
+    <input id="loginPass" type="password" placeholder="رمز السر">
+    <button onclick="login()">دخول</button>
+
+    <hr>
+
+    <h2>إنشاء حساب جديد</h2>
+    <input id="regUser" placeholder="اسم المستخدم">
+    <input id="regPass" type="password" placeholder="رمز السر">
+    <button onclick="register()">تسجيل</button>
+
+    <p>حساب المدير: admin / 1234</p>
+  </div>
+
+  <div id="app" class="hidden">
+
+    <div class="box">
+      <h2 id="welcome"></h2>
+      <button class="logout-btn" onclick="logout()">تسجيل خروج</button>
+    </div>
+
+    <div id="admin" class="box admin-panel hidden">
+      <h2>لوحة تحكم المدير</h2>
+      <div id="stats" class="stats"></div>
+
+      <h3>إضافة كتاب جديد</h3>
+      <input id="title" placeholder="اسم الكتاب">
+      <input id="author" placeholder="اسم المؤلف">
+      <input id="image" placeholder="رابط صورة الكتاب من الإنترنت">
+      <button onclick="addBook()">إضافة كتاب</button>
+    </div>
+
+    <h2 class="section-title">الفهرس</h2>
+    <div id="books" class="books-grid"></div>
+
+  </div>
+
+</main>
+
+<script>
+let user = null;
+
+async function register() {
+  const username = regUser.value.trim();
+  const password = regPass.value.trim();
+
+  if (!username || !password) {
+    alert("اكتب اسم المستخدم والرمز");
+    return;
+  }
+
+  const res = await fetch('/register', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({ username, password })
+  });
+
+  const data = await res.json();
+
+  if (!data.success) {
+    alert("اسم المستخدم موجود مسبقاً");
+    return;
+  }
+
+  alert("تم إنشاء الحساب بنجاح");
+  regUser.value = "";
+  regPass.value = "";
+}
+
+async function login() {
+  const username = loginUser.value.trim();
+  const password = loginPass.value.trim();
+
+  const res = await fetch('/login', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({ username, password })
+  });
+
+  const data = await res.json();
+
+  if (!data.success) {
+    alert("اسم المستخدم أو الرمز غير صحيح");
+    return;
+  }
+
+  user = data;
+
+  auth.classList.add("hidden");
+  app.classList.remove("hidden");
+
+  welcome.innerText = "مرحباً " + user.username + " — الصلاحية: " + user.role;
+
+  if (user.role === "admin") {
+    admin.classList.remove("hidden");
+  }
+
+  loadBooks();
+}
+
+function logout() {
+  user = null;
+  auth.classList.remove("hidden");
+  app.classList.add("hidden");
+  admin.classList.add("hidden");
+}
+
+async function loadBooks() {
+  const res = await fetch('/books');
+  const books = await res.json();
+
+  showStats(books);
+  showBooks(books);
+}
+
+function showStats(books) {
+  if (!user || user.role !== "admin") return;
+
+  const total = books.length;
+  const reserved = books.filter(b => b.reserved == 1).length;
+  const available = total - reserved;
+
+  stats.innerHTML = `
+    عدد الكتب: ${total}<br>
+    الكتب المتاحة: ${available}<br>
+    الكتب المحجوزة: ${reserved}
+  `;
+}
+
+function showBooks(books) {
+  let html = "";
+
+  if (books.length === 0) {
+    books.innerHTML = "<p>لا توجد كتب حالياً.</p>";
+    return;
+  }
+
+  books.forEach(book => {
+    const isReserved = book.reserved == 1;
+
+    html += `
+      <div class="book">
+        <div class="book-cover">
+          <span class="badge ${isReserved ? 'reserved' : ''}">
+            ${isReserved ? 'محجوز' : 'متاح'}
+          </span>
+
+          ${
+            book.image
+            ? `<img src="${book.image}" alt="صورة الكتاب">`
+            : `<div class="book-title-on-cover">${book.title}</div>`
+          }
+        </div>
+
+        <h3>${book.title}</h3>
+        <p>${book.author}</p>
+
+        ${
+          isReserved
+          ? `
+            <p class="reserved-text">محجوز لـ: ${book.reservedBy}</p>
+            <p>تاريخ الحجز: ${book.reservedDate}</p>
+            <button class="return-btn" onclick="returnBook(${book.id})">إرجاع</button>
+          `
+          : `
+            <p class="available">متاح للاستعارة</p>
+            <button onclick="reserveBook(${book.id})">استعارة</button>
+          `
+        }
+
+        ${
+          user.role === "admin"
+          ? `
+            <button class="edit-btn" onclick="editBook(${book.id}, '${book.title}', '${book.author}', '${book.image || ""}')">تعديل</button>
+            <button class="delete-btn" onclick="deleteBook(${book.id})">حذف</button>
+          `
+          : ""
+        }
+      </div>
+    `;
+  });
+
+  document.getElementById("books").innerHTML = html;
+}
+
+async function addBook() {
+  if (!title.value.trim() || !author.value.trim()) {
+    alert("اكتب اسم الكتاب والمؤلف");
+    return;
+  }
+
+  await fetch('/books', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      title: title.value.trim(),
+      author: author.value.trim(),
+      image: image.value.trim()
+    })
+  });
+
+  title.value = "";
+  author.value = "";
+  image.value = "";
+
+  loadBooks();
+}
+
+async function deleteBook(id) {
+  if (!confirm("هل تريد حذف الكتاب؟")) return;
+
+  await fetch('/books/' + id, {
+    method: 'DELETE'
+  });
+
+  loadBooks();
+}
+
+async function reserveBook(id) {
+  await fetch('/books/' + id + '/reserve', {
+    method: 'PUT',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({ name: user.username })
+  });
+
+  loadBooks();
+}
+
+async function returnBook(id) {
+  await fetch('/books/' + id + '/return', {
+    method: 'PUT'
+  });
+
+  loadBooks();
+}
+
+function editBook(id, oldTitle, oldAuthor, oldImage) {
+  const newTitle = prompt("اسم الكتاب:", oldTitle);
+  const newAuthor = prompt("اسم المؤلف:", oldAuthor);
+  const newImage = prompt("رابط الصورة:", oldImage);
+
+  if (!newTitle || !newAuthor) return;
+
+  fetch('/books/' + id, {
+    method: 'PUT',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      title: newTitle,
+      author: newAuthor,
+      image: newImage
+    })
+  }).then(() => loadBooks());
+}
+</script>
+
+</body>
+</html>
